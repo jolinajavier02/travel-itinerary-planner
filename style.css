@@ -37,16 +37,14 @@ body {
     padding: 1.5rem;
 }
 
-/* Stack on mobile */
+/* mobile */
 @media (max-width: 768px) {
     .container {
-        grid-template-columns: 1fr;
         padding: 1rem;
     }
 }
 
-.form-section,
-.preview-section {
+.form-section {
     background: white;
     border-radius: var(--radius);
     padding: 1.25rem;
@@ -109,16 +107,13 @@ textarea:focus {
     font-size: 0.9rem;
 }
 
-.day-header strong {
-    font-weight: 600;
-}
-
 .day-remove {
     background: transparent;
-    border: none;
-    color: #d7263d;
-    font-size: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
     cursor: pointer;
+    font-size: 0.8rem;
 }
 
 textarea {
@@ -159,64 +154,14 @@ textarea {
 }
 
 .actions {
-    margin-top: 1rem;
-}
-
-/* PDF preview styles */
-#pdf-content {
-    background: white;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    font-size: 0.9rem;
-}
-
-#pdf-title {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-}
-
-#pdf-meta {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-}
-
-#pdf-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#pdf-table th,
-#pdf-table td {
-    border: 1px solid #ccc;
-    padding: 0.35rem;
-    text-align: left;
-    vertical-align: top;
-}
-
-#pdf-table th {
-    background: #f0f2f8;
-    font-weight: 600;
-}
-
-.day-header {
+    margin-top: 0.75rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.day-remove {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.2rem 0.6rem;
-    cursor: pointer;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 /* preview overlay + modal */
+
 .preview-overlay {
     position: fixed;
     inset: 0;
@@ -251,4 +196,36 @@ textarea {
 .preview-actions {
     margin-top: 0.75rem;
     text-align: right;
+}
+
+/* table inside preview (Japan & others) */
+
+#pdf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#pdf-table th,
+#pdf-table td {
+    border: 1px solid #ccc;
+    padding: 0.35rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+#pdf-table th {
+    background: #f0f2f8;
+    font-weight: 600;
+}
+
+#pdf-title {
+    margin: 0;
+    text-align: center;
+}
+
+#pdf-meta {
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
 }
