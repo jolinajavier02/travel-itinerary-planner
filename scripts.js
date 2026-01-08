@@ -110,57 +110,36 @@ function buildTableHeader(countryCode) {
     pdfTheadEl.appendChild(tr);
 }
 
-function updatePreview() {
+function openPreview() {
     const data = collectFormData();
-    buildTableHeader(data.country);
+    if (!data.travelerName || !data.country || data.days.length === 0) {
+        alert("Please complete traveler, country, and at least one day.");
+        return;
+    }
+    updatePreview();
+    previewOverlay.classList.remove("hidden");
+}
 
-    const templateName = (() => {
-        switch (data.country) {
-            case "schengen":
-                return "Schengen Visa Travel Itinerary";
-            case "japan":
-                return "Japan Visa Travel Itinerary";
-            case "uk":
-                return "UK Visitor Visa Travel Itinerary";
-            case "usa":
-                return "US Tourist Visa Travel Itinerary";
-            case "personal":
-                return "Personal Travel Itinerary";
-            default:
-                return "Travel Itinerary";
-        }
-    })();
+function closePreview() {
+    previewOverlay.classList.add("hidden");
+}
 
-    pdfTitleEl.textContent = templateName;
+async function downloadPdf() {
+    updatePreview();
 
-    const namePart = data.travelerName ? `for ${data.travelerName}` : "";
-    const purposePart = data.purpose ? ` – Purpose: ${data.purpose}` : "";
-    pdfMetaEl.textContent = `${namePart}${purposePart}`.trim();
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "pt", "a4");
+    const pdfContent = document.querySelector(".preview-modal");
 
-    pdfTableBodyEl.innerHTML = "";
-
-    data.days.forEach((day) => {
-        const tr = document.createElement("tr");
-
-        if (data.country === "japan") {
-            tr.innerHTML = `
-        <td>${day.date || ""}</td>
-        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
-        <td>${day.city || ""}</td>
-        <td>${day.accommodation || ""}</td>
-      `;
-        } else {
-            tr.innerHTML = `
-        <td>${day.date || ""}</td>
-        <td>${day.city || ""}</td>
-        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
-        <td>${day.accommodation || ""}</td>
-      `;
-        }
-
-        pdfTableBodyEl.appendChild(tr);
+    await pdf.html(pdfContent, {
+        callback: function (doc) {
+            doc.save("itinerary.pdf");
+        },
+        margin: [20, 20, 20, 20],
+        html2canvas: { scale: 0.8, useCORS: true },
     });
 }
+
 
 async function generatePdf() {
     // simple required checks
