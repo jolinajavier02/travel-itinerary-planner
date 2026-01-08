@@ -27,9 +27,14 @@ function createDayCard(index) {
       <input type="text" class="day-accommodation"
         placeholder="Hotel name, address, contact" />
     </div>
+    <div class="actions">
+      <button type="button" class="btn secondary day-preview">Preview</button>
+      <button type="button" class="btn primary day-download">Download</button>
+    </div>
   `;
     return wrapper;
 }
+
 
 const daysContainer = document.getElementById("days-container");
 const addDayBtn = document.getElementById("add-day-btn");
