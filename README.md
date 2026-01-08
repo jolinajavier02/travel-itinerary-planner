@@ -1,83 +1,89 @@
-**Travel Itinerary PDF Generator**
-A responsive web app that lets users create visa‑style or personal travel itineraries, preview them in the browser, and download them as PDF files. The app supports country‑specific formats such as the Japan visa itinerary (Date / Activity Plan / Contact / Accommodation).
+# 🌍 Travel Itinerary Planner
 
-**Features**
-Responsive single‑page interface built with HTML, CSS, and vanilla JavaScript.
+A sleek, responsive web application designed to help travelers create professional, visa-ready, or personal travel itineraries. Preview your plans in real-time and export them as high-quality PDF documents directly from your browser.
 
-Country selector (e.g., Schengen, Japan, UK, USA, Personal) to control itinerary format.
+---
 
-Dynamic day‑by‑day itinerary builder (add/remove days).
+## ✨ Features
 
-Per‑day Preview and Download buttons that show a full‑trip preview in a modal.
+- **🎯 Visa-Specific Templates**: Supports specialized formats for Japan, Schengen, UK, and USA visa applications.
+- **📱 Responsive Design**: A modern, mobile-friendly interface built for all devices.
+- **⚡ Dynamic Builder**: Easily add or remove days to your itinerary with a single click.
+- **👁️ Real-time Preview**: View your formatted itinerary in a professional table layout before downloading.
+- **📄 PDF Export**: Generate and download high-quality PDFs using `jsPDF` and `html2canvas`.
+- **🔒 Privacy First**: No backend required. All data stays in your browser.
 
-PDF export generated in the browser using jsPDF and html2canvas.
+---
 
-**Tech Stack**
-Frontend: HTML5, CSS3, JavaScript (no framework).
+## 🛠️ Tech Stack
 
-PDF generation: jsPDF + html2canvas loaded from CDN.
+- **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+)
+- **Libraries**: 
+  - [jsPDF](https://github.com/parallax/jsPDF) - PDF generation
+  - [html2canvas](https://html2canvas.hertzen.com/) - HTML to Canvas rendering
 
-No backend required: Everything runs client‑side in the browser.
+---
 
-**Project Structure**
-text
+## 🚀 Getting Started
+
+### Prerequisites
+No installation is required. You only need a modern web browser.
+
+### Running Locally
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/travel-itinerary-planner.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd travel-itinerary-planner
+   ```
+3. Open `index.html` in your browser.
+
+---
+
+## 📖 Usage Guide
+
+1. **Enter Trip Details**: Fill in the traveler's name, destination, and purpose of travel.
+2. **Build Your Days**:
+   - Click **"+ Add day"** to create a new entry.
+   - Fill in the **Date**, **City/Contact**, **Activities**, and **Accommodation**.
+3. **Preview & Export**:
+   - Click **"Preview"** on any day card to see the full itinerary.
+   - Click **"Download PDF"** in the preview modal to save your document.
+
+---
+
+## 📂 Project Structure
+
+```text
 .
-├── index.html      # Main page with form, country selector, preview modal
-├── styles.css      # Layout, responsive styles, preview and table styling
-└── app.js          # Itinerary logic, template switching, PDF generation
+├── index.html      # Main application structure
+├── style.css       # Modern styling and layout
+├── scripts.js      # Core logic and PDF generation
+└── README.md       # Project documentation
+```
 
-**Usage**
+---
 
-Enter the traveler name, select the destination country, and optionally fill in the purpose of travel.
+## 🗺️ Country-Specific Formats
 
-Add one or more itinerary days using the “+ Add day” button.
+| Country | Table Columns |
+| :--- | :--- |
+| **Japan** | Date \| Activity Plan \| Contact \| Accommodation |
+| **Schengen / UK / USA** | Date \| City \| Activities \| Accommodation |
+| **Personal** | Date \| City \| Activities \| Accommodation |
 
-For each day, fill in:
+---
 
-Date
+## 🔧 Customization
 
-City (or contact, for Japan template)
+- **Add Countries**: Edit the `<select id="country">` in `index.html`.
+- **Modify Templates**: Update the `buildTableHeader` and `updatePreview` functions in `scripts.js`.
+- **Change Styles**: Adjust colors, fonts, and spacing in `style.css`.
 
-Activities (free‑text, supports multiple lines)
+---
 
-Accommodation
+## 📄 License
 
-Click Preview on any day card to open the itinerary preview modal.
-
-Review the table:
-
-For Japan, the table shows: Date, Activity Plan, Contact, Accommodation.
-
-For other countries, the default is: Date, City, Activities, Accommodation.
-
-Click Download PDF in the modal to save the itinerary as a PDF file.
-
-**Country‑Specific Formats**
-**Japan:**
-
-Columns: Date | Activity Plan | Contact | Accommodation (replicates the Japan visa itinerary table style).
-
-**Schengen / UK / USA / Personal:**
-
-Default columns: Date | City | Activities | Accommodation.
-
-You can extend the logic in app.js to customize headers and layout per country if needed.
-
-**Customization**
-To add or rename countries, edit the <select id="country"> options in index.html.
-
-To change table headers or layout for a specific country, update the buildTableHeader and updatePreview functions in app.js.
-
-Styles (colors, fonts, spacing) can be customized in styles.css.
-
-**Dependencies**
-The project pulls third‑party libraries from public CDNs:
-
-jsPDF (for PDF generation).
-
-html2canvas (for rendering HTML content to canvas before PDF).
-
-No installation is required beyond having a modern web browser.
-
-
-# travel-itinerary-lanner
+This project is open-source and available under the [MIT License](LICENSE).
