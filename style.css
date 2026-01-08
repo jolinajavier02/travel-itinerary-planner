@@ -15,7 +15,8 @@
 
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     color: var(--text);
     background: var(--bg);
 }
@@ -32,12 +33,11 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 1.5rem;
 }
 
-/* mobile */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -91,19 +91,65 @@ textarea:focus {
     box-shadow: 0 0 0 1px rgba(0, 102, 255, 0.2);
 }
 
+textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.flight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+    .flight-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* day input block */
+.day-input {
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    background: #fafbff;
+}
+
+/* itinerary list section */
+.itinerary-list-wrapper {
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #fafafa;
+    padding: 0.75rem;
+}
+
+.itinerary-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
 .day-card {
     border: 1px solid var(--border);
     border-radius: 6px;
     padding: 0.75rem;
-    margin-bottom: 0.75rem;
-    background: #fafbff;
+    margin-bottom: 0.6rem;
+    background: white;
 }
 
 .day-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
     font-size: 0.9rem;
 }
 
@@ -111,21 +157,28 @@ textarea:focus {
     background: transparent;
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 0.2rem 0.6rem;
+    padding: 0.15rem 0.55rem;
     cursor: pointer;
     font-size: 0.8rem;
 }
 
-textarea {
-    min-height: 60px;
-    resize: vertical;
+.day-meta {
+    font-size: 0.86rem;
+    margin-bottom: 0.25rem;
 }
+
+.day-activities-text,
+.day-accommodation-text {
+    font-size: 0.86rem;
+}
+
+/* buttons */
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 1rem;
     border-radius: 999px;
     border: 1px solid transparent;
     font-size: 0.9rem;
@@ -153,14 +206,7 @@ textarea {
     background: #eef2ff;
 }
 
-.actions {
-    margin-top: 0.75rem;
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-/* preview overlay + modal */
+/* preview overlay & modal */
 
 .preview-overlay {
     position: fixed;
@@ -193,12 +239,18 @@ textarea {
     margin-bottom: 0.5rem;
 }
 
-.preview-actions {
-    margin-top: 0.75rem;
-    text-align: right;
+#pdf-title {
+    margin: 0;
+    text-align: center;
 }
 
-/* table inside preview (Japan & others) */
+#pdf-meta {
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+/* table used for Japan and others */
 
 #pdf-table {
     width: 100%;
@@ -217,15 +269,4 @@ textarea {
 #pdf-table th {
     background: #f0f2f8;
     font-weight: 600;
-}
-
-#pdf-title {
-    margin: 0;
-    text-align: center;
-}
-
-#pdf-meta {
-    margin-top: 0.25rem;
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
 }
