@@ -54,19 +54,32 @@
                         <label for="country">Visa / Main Destination Country</label>
                         <select id="country" required>
                             <option value="">Select country…</option>
-                            <option value="schengen">Schengen (e.g., France, Germany)</option>
                             <option value="japan">Japan</option>
+                            <option value="schengen">Schengen (e.g., France, Germany, Italy, Spain)</option>
                             <option value="uk">United Kingdom</option>
                             <option value="usa">United States</option>
+                            <option value="canada">Canada</option>
+                            <option value="australia">Australia</option>
+                            <option value="new-zealand">New Zealand</option>
+                            <option value="south-korea">South Korea</option>
+                            <option value="china">China</option>
+                            <option value="taiwan">Taiwan</option>
+                            <option value="singapore">Singapore</option>
+                            <option value="thailand">Thailand</option>
+                            <option value="vietnam">Vietnam</option>
+                            <option value="malaysia">Malaysia</option>
+                            <option value="indonesia">Indonesia</option>
+                            <option value="philippines">Philippines</option>
+                            <option value="hong-kong">Hong Kong</option>
+                            <option value="macau">Macau</option>
+                            <option value="india">India</option>
+                            <option value="uae">United Arab Emirates</option>
+                            <option value="saudi-arabia">Saudi Arabia</option>
+                            <option value="brazil">Brazil</option>
+                            <option value="mexico">Mexico</option>
+                            <option value="south-africa">South Africa</option>
                             <option value="personal">Personal / Other</option>
                         </select>
-                    </div>
-
-                    <!-- all destinations to visit -->
-                    <div class="field">
-                        <label for="destinations">All Destinations to Visit</label>
-                        <input type="text" id="destinations"
-                            placeholder="e.g., Tokyo, Osaka, Kyoto / Paris, Brussels, Amsterdam" />
                     </div>
 
                     <div class="field">
@@ -76,6 +89,10 @@
                             <option value="tourism">Tourism</option>
                             <option value="business">Business</option>
                             <option value="visit-family">Visit Family/Friends</option>
+                            <option value="spouse-japanese">Spouse of Japanese Citizen</option>
+                            <option value="dependent">Dependent</option>
+                            <option value="long-term-resident">Long-term Resident</option>
+                            <option value="permanent-resident">Permanent Resident</option>
                             <option value="medical">Medical Treatment</option>
                             <option value="study">Study/Training</option>
                             <option value="official">Official Visit</option>
@@ -111,6 +128,12 @@
                         <label for="connectingDetails">Connecting Flight Details</label>
                         <textarea id="connectingDetails"
                             placeholder="e.g., Layover in Singapore (SIN), Transfer to SQ422…"></textarea>
+                    </div>
+
+                    <div class="field" id="multi-flight-field" style="display: none;">
+                        <label for="multiFlightDetails">Multiple Flight Details</label>
+                        <textarea id="multiFlightDetails"
+                            placeholder="e.g., Flight 1: MNL-NRT, Flight 2: NRT-CTS, Flight 3: CTS-MNL..."></textarea>
                     </div>
 
                     <div class="field">
