@@ -90,10 +90,30 @@ function collectFormData() {
     };
 }
 
+function buildTableHeader(countryCode) {
+    pdfTheadEl.innerHTML = "";
+    const tr = document.createElement("tr");
+
+    if (countryCode === "japan") {
+        ["Date", "Activity Plan", "Contact", "Accommodation"].forEach((h) => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            tr.appendChild(th);
+        });
+    } else {
+        ["Date", "City", "Activities", "Accommodation"].forEach((h) => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            tr.appendChild(th);
+        });
+    }
+    pdfTheadEl.appendChild(tr);
+}
+
 function updatePreview() {
     const data = collectFormData();
+    buildTableHeader(data.country);
 
-    // Title based on country/template
     const templateName = (() => {
         switch (data.country) {
             case "schengen":
@@ -115,19 +135,29 @@ function updatePreview() {
 
     const namePart = data.travelerName ? `for ${data.travelerName}` : "";
     const purposePart = data.purpose ? ` – Purpose: ${data.purpose}` : "";
-
     pdfMetaEl.textContent = `${namePart}${purposePart}`.trim();
 
-    // Fill table body
     pdfTableBodyEl.innerHTML = "";
+
     data.days.forEach((day) => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `
-      <td>${day.date || ""}</td>
-      <td>${day.city || ""}</td>
-      <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
-      <td>${day.accommodation || ""}</td>
-    `;
+
+        if (data.country === "japan") {
+            tr.innerHTML = `
+        <td>${day.date || ""}</td>
+        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
+        <td>${day.city || ""}</td>
+        <td>${day.accommodation || ""}</td>
+      `;
+        } else {
+            tr.innerHTML = `
+        <td>${day.date || ""}</td>
+        <td>${day.city || ""}</td>
+        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
+        <td>${day.accommodation || ""}</td>
+      `;
+        }
+
         pdfTableBodyEl.appendChild(tr);
     });
 }
