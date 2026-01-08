@@ -17,6 +17,11 @@ const flightTypeEl = document.getElementById("flightType");
 const departureDateEl = document.getElementById("departureDate");
 const returnDateEl = document.getElementById("returnDate");
 const flightDetailsEl = document.getElementById("flightDetails");
+const connectingDetailsEl = document.getElementById("connectingDetails");
+
+const departureField = document.getElementById("departure-field");
+const returnField = document.getElementById("return-field");
+const connectingDetailsField = document.getElementById("connecting-details-field");
 
 // daily input
 const dayDateEl = document.getElementById("dayDate");
@@ -66,6 +71,23 @@ function closeTemplates() {
 }
 
 // ---------- helpers ----------
+
+function updateFlightFields() {
+    const type = flightTypeEl.value;
+
+    // Reset fields
+    returnField.classList.remove("disabled");
+    returnDateEl.disabled = false;
+    connectingDetailsField.style.display = "none";
+
+    if (type === "oneway") {
+        returnField.classList.add("disabled");
+        returnDateEl.disabled = true;
+        returnDateEl.value = "";
+    } else if (type === "connecting") {
+        connectingDetailsField.style.display = "block";
+    }
+}
 
 function updateInputLabels() {
     const country = countryEl.value;
@@ -152,11 +174,12 @@ function collectHeaderData() {
         travelerName: travelerNameEl.value.trim(),
         country: countryEl.value,
         destinations: destinationsEl.value.trim(),
-        purpose: purposeEl.value.trim(),
+        purpose: purposeEl.options[purposeEl.selectedIndex].text,
         flightType: flightTypeEl.value,
         departureDate: departureDateEl.value,
         returnDate: returnDateEl.value,
         flightDetails: flightDetailsEl.value.trim(),
+        connectingDetails: connectingDetailsEl.value.trim(),
     };
 }
 
@@ -207,7 +230,7 @@ function updatePreviewContent() {
     const parts = [];
     if (header.travelerName) parts.push(`<strong>Applicant:</strong> ${header.travelerName}`);
     if (header.destinations) parts.push(`<strong>Destinations:</strong> ${header.destinations}`);
-    if (header.purpose) parts.push(`<strong>Purpose:</strong> ${header.purpose}`);
+    if (header.purpose && header.purpose !== "Select purpose…") parts.push(`<strong>Purpose:</strong> ${header.purpose}`);
 
     if (header.departureDate) {
         if (header.flightType === "roundtrip" && header.returnDate) {
@@ -218,8 +241,13 @@ function updatePreviewContent() {
             parts.push(`<strong>Travel date:</strong> ${header.departureDate} (${header.flightType})`);
         }
     }
+
+    if (header.connectingDetails) {
+        parts.push(`<strong>Connecting Flights:</strong> ${header.connectingDetails}`);
+    }
+
     if (header.flightDetails) {
-        parts.push(`<strong>Flights:</strong> ${header.flightDetails}`);
+        parts.push(`<strong>Flight Details:</strong> ${header.flightDetails}`);
     }
 
     pdfMetaEl.innerHTML = parts.join(" | ");
@@ -297,6 +325,8 @@ countryEl.addEventListener("change", () => {
     updateInputLabels();
     renderDays(); // Re-render existing days with new labels if needed
 });
+
+flightTypeEl.addEventListener("change", updateFlightFields);
 
 addDayBtn.addEventListener("click", addDay);
 

@@ -104,7 +104,16 @@
 
                     <div class="field">
                         <label for="purpose">Purpose of Travel</label>
-                        <input type="text" id="purpose" placeholder="Tourism, business, visit family…" />
+                        <select id="purpose" required>
+                            <option value="">Select purpose…</option>
+                            <option value="tourism">Tourism</option>
+                            <option value="business">Business</option>
+                            <option value="visit-family">Visit Family/Friends</option>
+                            <option value="medical">Medical Treatment</option>
+                            <option value="study">Study/Training</option>
+                            <option value="official">Official Visit</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
 
                     <!-- flight details -->
@@ -121,18 +130,24 @@
                     </div>
 
                     <div class="flight-grid">
-                        <div class="field">
+                        <div class="field" id="departure-field">
                             <label for="departureDate">Departure Date</label>
                             <input type="date" id="departureDate" />
                         </div>
-                        <div class="field">
-                            <label for="returnDate">Return Date (if round trip)</label>
+                        <div class="field" id="return-field">
+                            <label for="returnDate">Return Date</label>
                             <input type="date" id="returnDate" />
                         </div>
                     </div>
 
+                    <div class="field" id="connecting-details-field" style="display: none;">
+                        <label for="connectingDetails">Connecting Flight Details</label>
+                        <textarea id="connectingDetails"
+                            placeholder="e.g., Layover in Singapore (SIN), Transfer to SQ422…"></textarea>
+                    </div>
+
                     <div class="field">
-                        <label for="flightDetails">Flight Details (Optional)</label>
+                        <label for="flightDetails">Flight Details</label>
                         <textarea id="flightDetails"
                             placeholder="e.g., MNL → NRT, JL746 · possible connections, multiple segments…"></textarea>
                     </div>
