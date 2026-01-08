@@ -1,108 +1,124 @@
 // DOM references
-const daysContainer = document.getElementById("days-container");
-const addDayBtn = document.getElementById("add-day-btn");
-
 const travelerNameEl = document.getElementById("travelerName");
 const countryEl = document.getElementById("country");
+const destinationsEl = document.getElementById("destinations");
 const purposeEl = document.getElementById("purpose");
 
-// preview DOM
-const pdfTitleEl = document.getElementById("pdf-title");
-const pdfMetaEl = document.getElementById("pdf-meta");
-const pdfTableBodyEl = document.getElementById("pdf-table-body");
-const pdfTheadEl = document.getElementById("pdf-thead");
+const flightTypeEl = document.getElementById("flightType");
+const departureDateEl = document.getElementById("departureDate");
+const returnDateEl = document.getElementById("returnDate");
+const flightDetailsEl = document.getElementById("flightDetails");
+
+// daily input
+const dayDateEl = document.getElementById("dayDate");
+const dayCityContactEl = document.getElementById("dayCityContact");
+const dayActivitiesEl = document.getElementById("dayActivities");
+const dayAccommodationEl = document.getElementById("dayAccommodation");
+const addDayBtn = document.getElementById("add-day-btn");
+
+// list of days
+const daysContainer = document.getElementById("days-container");
+const previewBtn = document.getElementById("preview-btn");
+const downloadBtn = document.getElementById("download-btn");
+
+// preview modal
 const previewOverlay = document.getElementById("preview-overlay");
 const closePreviewBtn = document.getElementById("close-preview");
-const downloadPdfBtn = document.getElementById("download-pdf-btn");
+const pdfTitleEl = document.getElementById("pdf-title");
+const pdfMetaEl = document.getElementById("pdf-meta");
+const pdfTheadEl = document.getElementById("pdf-thead");
+const pdfTableBodyEl = document.getElementById("pdf-table-body");
 
-let dayCount = 0;
+let days = [];
 
-// create a day card
-function createDayCard(index) {
-    const wrapper = document.createElement("div");
-    wrapper.className = "day-card";
-    wrapper.dataset.index = index;
+// ---------- helpers ----------
 
-    wrapper.innerHTML = `
-    <div class="day-header">
-      <strong>Day ${index + 1}</strong>
-      <button type="button" class="day-remove">Remove</button>
-    </div>
-    <div class="field">
-      <label>Date</label>
-      <input type="date" class="day-date" required />
-    </div>
-    <div class="field">
-      <label>City</label>
-      <input type="text" class="day-city" placeholder="City" />
-    </div>
-    <div class="field">
-      <label>Activities</label>
-      <textarea class="day-activities"
-        placeholder="Morning: ...&#10;Afternoon: ...&#10;Evening: ..."></textarea>
-    </div>
-    <div class="field">
-      <label>Accommodation</label>
-      <input type="text" class="day-accommodation"
-        placeholder="Hotel name, address, contact" />
-    </div>
-    <div class="actions">
-      <button type="button" class="btn secondary day-preview">Preview</button>
-      <button type="button" class="btn primary day-download">Download</button>
-    </div>
-  `;
-    return wrapper;
+function resetDayInput() {
+    dayDateEl.value = "";
+    dayCityContactEl.value = "";
+    dayActivitiesEl.value = "";
+    dayAccommodationEl.value = "";
 }
 
 function addDay() {
-    const card = createDayCard(dayCount);
-    daysContainer.appendChild(card);
-    dayCount++;
+    if (!dayDateEl.value) {
+        alert("Please select a date for the day.");
+        return;
+    }
+
+    const day = {
+        date: dayDateEl.value,
+        cityContact: dayCityContactEl.value.trim(),
+        activities: dayActivitiesEl.value.trim(),
+        accommodation: dayAccommodationEl.value.trim(),
+    };
+
+    days.push(day);
+    renderDays();
+    resetDayInput();
 }
 
-function removeDay(card) {
-    daysContainer.removeChild(card);
-    Array.from(daysContainer.querySelectorAll(".day-card")).forEach((c, i) => {
-        c.dataset.index = i;
-        c.querySelector(".day-header strong").textContent = `Day ${i + 1}`;
-    });
-    dayCount = daysContainer.querySelectorAll(".day-card").length;
+function removeDay(index) {
+    days.splice(index, 1);
+    renderDays();
 }
 
-function collectFormData() {
-    const days = [];
-    const cards = daysContainer.querySelectorAll(".day-card");
-    cards.forEach((card) => {
-        days.push({
-            date: card.querySelector(".day-date").value,
-            city: card.querySelector(".day-city").value,
-            activities: card.querySelector(".day-activities").value,
-            accommodation: card.querySelector(".day-accommodation").value,
-        });
-    });
+function renderDays() {
+    daysContainer.innerHTML = "";
+    days.forEach((d, i) => {
+        const card = document.createElement("div");
+        card.className = "day-card";
 
+        card.innerHTML = `
+      <div class="day-header">
+        <span>Day ${i + 1} – ${d.date}</span>
+        <button type="button" class="day-remove" data-index="${i}">
+          Remove
+        </button>
+      </div>
+      <div class="day-meta">
+        <strong>City / Contact:</strong> ${d.cityContact || "-"}
+      </div>
+      <div class="day-activities-text">
+        <strong>Activities:</strong><br>
+        ${(d.activities || "-").replace(/\n/g, "<br>")}
+      </div>
+      <div class="day-accommodation-text">
+        <strong>Accommodation:</strong> ${d.accommodation || "-"}
+      </div>
+    `;
+
+        daysContainer.appendChild(card);
+    });
+}
+
+function collectHeaderData() {
     return {
         travelerName: travelerNameEl.value.trim(),
         country: countryEl.value,
+        destinations: destinationsEl.value.trim(),
         purpose: purposeEl.value.trim(),
-        days,
+        flightType: flightTypeEl.value,
+        departureDate: departureDateEl.value,
+        returnDate: returnDateEl.value,
+        flightDetails: flightDetailsEl.value.trim(),
     };
 }
 
-// table header: Japan vs others
+// build table header based on country
 function buildTableHeader(countryCode) {
     pdfTheadEl.innerHTML = "";
     const tr = document.createElement("tr");
 
     if (countryCode === "japan") {
-        // Japan visa template: Date | Activity Plan | Contact | Accommodation [web:9]
+        // Japan template: Date | Activity Plan | Contact | Accommodation [web:63][web:64]
         ["Date", "Activity Plan", "Contact", "Accommodation"].forEach((h) => {
             const th = document.createElement("th");
             th.textContent = h;
             tr.appendChild(th);
         });
     } else {
-        // generic: Date | City | Activities | Accommodation [web:3][web:41]
+        // generic visa style: Date | City | Activities | Accommodation [web:1][web:68]
         ["Date", "City", "Activities", "Accommodation"].forEach((h) => {
             const th = document.createElement("th");
             th.textContent = h;
@@ -113,20 +129,19 @@ function buildTableHeader(countryCode) {
     pdfTheadEl.appendChild(tr);
 }
 
-function updatePreview() {
-    const data = collectFormData();
-    buildTableHeader(data.country);
+function updatePreviewContent() {
+    const header = collectHeaderData();
 
-    const templateName = (() => {
-        switch (data.country) {
+    const templateTitle = (() => {
+        switch (header.country) {
             case "schengen":
-                return "Schengen Visa Travel Itinerary";
+                return "Travel Itinerary for Schengen Visa";
             case "japan":
-                return "Japan Visa Travel Itinerary";
+                return "Travel Itinerary for Japan Visa";
             case "uk":
-                return "UK Visitor Visa Travel Itinerary";
+                return "Travel Itinerary for UK Visitor Visa";
             case "usa":
-                return "US Tourist Visa Travel Itinerary";
+                return "Travel Itinerary for US Tourist Visa";
             case "personal":
                 return "Personal Travel Itinerary";
             default:
@@ -134,45 +149,63 @@ function updatePreview() {
         }
     })();
 
-    pdfTitleEl.textContent = templateName;
+    pdfTitleEl.textContent = templateTitle;
 
-    const namePart = data.travelerName ? `for ${data.travelerName}` : "";
-    const purposePart = data.purpose ? ` – Purpose: ${data.purpose}` : "";
-    pdfMetaEl.textContent = `${namePart}${purposePart}`.trim();
+    const parts = [];
+    if (header.travelerName) parts.push(`Applicant: ${header.travelerName}`);
+    if (header.destinations) parts.push(`Destinations: ${header.destinations}`);
+    if (header.purpose) parts.push(`Purpose: ${header.purpose}`);
+
+    if (header.departureDate) {
+        if (header.flightType === "roundtrip" && header.returnDate) {
+            parts.push(
+                `Travel dates: ${header.departureDate} to ${header.returnDate} (${header.flightType})`
+            );
+        } else {
+            parts.push(`Travel date: ${header.departureDate} (${header.flightType})`);
+        }
+    }
+    if (header.flightDetails) {
+        parts.push(`Flights: ${header.flightDetails}`);
+    }
+
+    pdfMetaEl.innerHTML = parts.join(" · ");
+
+    buildTableHeader(header.country);
 
     pdfTableBodyEl.innerHTML = "";
-
-    data.days.forEach((day) => {
+    days.forEach((d) => {
         const tr = document.createElement("tr");
-
-        if (data.country === "japan") {
-            // Japan: Date | Activity Plan | Contact | Accommodation [web:9]
+        if (header.country === "japan") {
             tr.innerHTML = `
-        <td>${day.date || ""}</td>
-        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
-        <td>${day.city || ""}</td>
-        <td>${day.accommodation || ""}</td>
+        <td>${d.date || ""}</td>
+        <td>${(d.activities || "").replace(/\n/g, "<br>")}</td>
+        <td>${d.cityContact || ""}</td>
+        <td>${d.accommodation || ""}</td>
       `;
         } else {
             tr.innerHTML = `
-        <td>${day.date || ""}</td>
-        <td>${day.city || ""}</td>
-        <td>${(day.activities || "").replace(/\n/g, "<br>")}</td>
-        <td>${day.accommodation || ""}</td>
+        <td>${d.date || ""}</td>
+        <td>${d.cityContact || ""}</td>
+        <td>${(d.activities || "").replace(/\n/g, "<br>")}</td>
+        <td>${d.accommodation || ""}</td>
       `;
         }
-
         pdfTableBodyEl.appendChild(tr);
     });
 }
 
 function openPreview() {
-    const data = collectFormData();
-    if (!data.travelerName || !data.country || data.days.length === 0) {
-        alert("Please complete traveler name, country, and at least one day.");
+    const header = collectHeaderData();
+    if (!header.travelerName || !header.country) {
+        alert("Please fill in full name and main destination country.");
         return;
     }
-    updatePreview();
+    if (days.length === 0) {
+        alert("Please add at least one itinerary day.");
+        return;
+    }
+    updatePreviewContent();
     previewOverlay.classList.remove("hidden");
 }
 
@@ -181,8 +214,7 @@ function closePreview() {
 }
 
 async function downloadPdf() {
-    updatePreview();
-
+    openPreview(); // ensures content is up to date
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "pt", "a4");
     const pdfContent = document.querySelector(".preview-modal");
@@ -196,36 +228,21 @@ async function downloadPdf() {
     });
 }
 
-// initial setup
-addDay();
+// ---------- event bindings ----------
 
-addDayBtn.addEventListener("click", () => {
-    addDay();
-});
+addDayBtn.addEventListener("click", addDay);
 
 daysContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("day-remove")) {
-        const card = e.target.closest(".day-card");
-        if (card) removeDay(card);
-    }
-
-    if (e.target.classList.contains("day-preview")) {
-        openPreview();
-    }
-
-    if (e.target.classList.contains("day-download")) {
-        openPreview();
-        // if you want auto-download after preview opens, uncomment:
-        // downloadPdf();
+        const index = parseInt(e.target.dataset.index, 10);
+        removeDay(index);
     }
 });
 
-document.getElementById("itinerary-form").addEventListener("input", updatePreview);
-countryEl.addEventListener("change", updatePreview);
+previewBtn.addEventListener("click", openPreview);
+downloadBtn.addEventListener("click", downloadPdf);
 
 closePreviewBtn.addEventListener("click", closePreview);
 previewOverlay.addEventListener("click", (e) => {
     if (e.target === previewOverlay) closePreview();
 });
-
-downloadPdfBtn.addEventListener("click", downloadPdf);
