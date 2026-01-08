@@ -26,11 +26,6 @@ text
 ├── styles.css      # Layout, responsive styles, preview and table styling
 └── app.js          # Itinerary logic, template switching, PDF generation
 
-**bash**
-# Python 3
-python -m http.server 8000
-# then open http://localhost:8000 in your browser
-
 **Usage**
 
 Enter the traveler name, select the destination country, and optionally fill in the purpose of travel.
