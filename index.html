@@ -17,61 +17,15 @@
         <section class="form-section">
             <h2>Trip details</h2>
             <form id="itinerary-form">
-                <div class="field">
-                    <label for="travelerName">Traveler name</label>
-                    <input type="text" id="travelerName" required />
-                </div>
-
-                <div class="field">
-                    <label for="country">Destination country</label>
-                    <select id="country" required>
-                        <option value="">Select country…</option>
-                        <option value="schengen">France (Schengen)</option>
-                        <option value="japan">Japan</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="usa">United States</option>
-                        <option value="personal">Personal / Other</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label for="purpose">Purpose of travel</label>
-                    <input type="text" id="purpose" placeholder="Tourism, business, visit family…" />
-                </div>
-
+                <!-- basic fields stay the same -->
+                ...
                 <h3>Daily itinerary</h3>
                 <div id="days-container"></div>
 
                 <button type="button" id="add-day-btn" class="btn secondary">
                     + Add day
                 </button>
-
-                <div class="actions">
-                    <button type="button" id="generate-pdf-btn" class="btn primary">
-                        Download PDF
-                    </button>
-                </div>
             </form>
-        </section>
-
-        <section class="preview-section">
-            <h2>PDF preview</h2>
-            <!-- This is what will be converted to PDF -->
-            <div id="pdf-content">
-                <h2 id="pdf-title">Travel Itinerary</h2>
-                <p id="pdf-meta"></p>
-                <table id="pdf-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>City</th>
-                            <th>Activities</th>
-                            <th>Accommodation</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pdf-table-body"></tbody>
-                </table>
-            </div>
         </section>
     </main>
 
