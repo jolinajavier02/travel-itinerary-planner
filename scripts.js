@@ -4,10 +4,6 @@ const plannerSection = document.getElementById("planner");
 const startPlanningBtn = document.getElementById("start-planning-btn");
 const backToHomeBtn = document.getElementById("back-to-home");
 
-const viewTemplatesBtn = document.getElementById("view-templates-btn");
-const templatesOverlay = document.getElementById("templates-overlay");
-const closeTemplatesBtn = document.getElementById("close-templates");
-
 const travelerNameEl = document.getElementById("travelerName");
 const countryEl = document.getElementById("country");
 const destinationsEl = document.getElementById("destinations");
@@ -60,14 +56,6 @@ function showLanding() {
     plannerSection.classList.remove("active");
     landingSection.style.display = "flex";
     window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function openTemplates() {
-    templatesOverlay.classList.remove("hidden");
-}
-
-function closeTemplates() {
-    templatesOverlay.classList.add("hidden");
 }
 
 // ---------- helpers ----------
@@ -314,12 +302,6 @@ async function downloadPdf() {
 
 startPlanningBtn.addEventListener("click", showPlanner);
 backToHomeBtn.addEventListener("click", showLanding);
-
-viewTemplatesBtn.addEventListener("click", openTemplates);
-closeTemplatesBtn.addEventListener("click", closeTemplates);
-templatesOverlay.addEventListener("click", (e) => {
-    if (e.target === templatesOverlay) closeTemplates();
-});
 
 countryEl.addEventListener("change", () => {
     updateInputLabels();
