@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --secondary: #ec4899;
-    --accent: #8b5cf6;
-    --bg: #0f172a;
-    --surface: #1e293b;
-    --text: #f8fafc;
-    --text-muted: #94a3b8;
-    --border: rgba(255, 255, 255, 0.1);
-    --glass: rgba(30, 41, 59, 0.7);
-    --radius: 16px;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    --primary: #09713D;
+    --primary-hover: #075a31;
+    --secondary: #09713D;
+    --accent: #09713D;
+    --bg: #ffffff;
+    --surface: #f8f9fa;
+    --text: #000000;
+    --text-muted: #666666;
+    --border: #dddddd;
+    --glass: rgba(255, 255, 255, 0.9);
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 *,
@@ -155,10 +155,10 @@ select,
 textarea {
     width: 100%;
     padding: 0.8rem 1rem;
-    background: rgba(15, 23, 42, 0.5);
+    background: #ffffff;
     border: 1px solid var(--border);
     border-radius: 10px;
-    color: #fff;
+    color: #000000;
     font-family: inherit;
     transition: all 0.2s;
 }
@@ -168,8 +168,8 @@ select:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(15, 23, 42, 0.8);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(9, 113, 61, 0.1);
 }
 
 .flight-grid {
@@ -186,7 +186,7 @@ textarea:focus {
 
 /* Day Input & Cards */
 .day-input {
-    background: rgba(99, 102, 241, 0.05);
+    background: rgba(9, 113, 61, 0.05);
     border: 1px dashed var(--primary);
     padding: 2rem;
     border-radius: var(--radius);
@@ -194,19 +194,20 @@ textarea:focus {
 }
 
 .itinerary-list-wrapper {
-    background: rgba(255, 255, 255, 0.02);
+    background: #ffffff;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
 }
 
 .day-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: #ffffff;
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.25rem;
     margin-bottom: 1rem;
     transition: transform 0.2s;
+    color: #000000;
 }
 
 .day-card:hover {
@@ -320,9 +321,42 @@ textarea:focus {
 }
 
 #pdf-table th {
-    background: #f8fafc;
+    background: #f0f2f8;
     font-weight: 600;
     color: #1e293b;
+}
+
+/* Templates Grid */
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.template-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.2s;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.template-card h3 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.template-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
 }
 
 /* Animations */

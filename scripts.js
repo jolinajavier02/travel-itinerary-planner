@@ -4,6 +4,10 @@ const plannerSection = document.getElementById("planner");
 const startPlanningBtn = document.getElementById("start-planning-btn");
 const backToHomeBtn = document.getElementById("back-to-home");
 
+const viewTemplatesBtn = document.getElementById("view-templates-btn");
+const templatesOverlay = document.getElementById("templates-overlay");
+const closeTemplatesBtn = document.getElementById("close-templates");
+
 const travelerNameEl = document.getElementById("travelerName");
 const countryEl = document.getElementById("country");
 const destinationsEl = document.getElementById("destinations");
@@ -20,6 +24,9 @@ const dayCityContactEl = document.getElementById("dayCityContact");
 const dayActivitiesEl = document.getElementById("dayActivities");
 const dayAccommodationEl = document.getElementById("dayAccommodation");
 const addDayBtn = document.getElementById("add-day-btn");
+
+const labelCityContact = document.getElementById("label-city-contact");
+const labelActivities = document.getElementById("label-activities");
 
 // list of days
 const daysContainer = document.getElementById("days-container");
@@ -50,7 +57,30 @@ function showLanding() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function openTemplates() {
+    templatesOverlay.classList.remove("hidden");
+}
+
+function closeTemplates() {
+    templatesOverlay.classList.add("hidden");
+}
+
 // ---------- helpers ----------
+
+function updateInputLabels() {
+    const country = countryEl.value;
+    if (country === "japan") {
+        labelCityContact.textContent = "Contact";
+        dayCityContactEl.placeholder = "Contact person or number";
+        labelActivities.textContent = "Activity Plan";
+        dayActivitiesEl.placeholder = "Planned activities for the day";
+    } else {
+        labelCityContact.textContent = "City";
+        dayCityContactEl.placeholder = "City name";
+        labelActivities.textContent = "Activities";
+        dayActivitiesEl.placeholder = "Morning: ... Afternoon: ... Evening: ...";
+    }
+}
 
 function resetDayInput() {
     dayDateEl.value = "";
@@ -70,6 +100,7 @@ function addDay() {
         cityContact: dayCityContactEl.value.trim(),
         activities: dayActivitiesEl.value.trim(),
         accommodation: dayAccommodationEl.value.trim(),
+        countryFormat: countryEl.value // Store format at time of adding
     };
 
     days.push(day);
@@ -84,9 +115,14 @@ function removeDay(index) {
 
 function renderDays() {
     daysContainer.innerHTML = "";
+    const country = countryEl.value;
+
     days.forEach((d, i) => {
         const card = document.createElement("div");
         card.className = "day-card";
+
+        const cityLabel = country === "japan" ? "Contact" : "City";
+        const activityLabel = country === "japan" ? "Activity Plan" : "Activities";
 
         card.innerHTML = `
       <div class="day-header">
@@ -96,10 +132,10 @@ function renderDays() {
         </button>
       </div>
       <div class="day-meta">
-        <strong>City / Contact:</strong> ${d.cityContact || "-"}
+        <strong>${cityLabel}:</strong> ${d.cityContact || "-"}
       </div>
       <div class="day-activities-text">
-        <strong>Activities:</strong><br>
+        <strong>${activityLabel}:</strong><br>
         ${(d.activities || "-").replace(/\n/g, "<br>")}
       </div>
       <div class="day-accommodation-text">
@@ -231,6 +267,7 @@ function closePreview() {
 }
 
 async function downloadPdf() {
+    const header = collectHeaderData();
     openPreview();
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "pt", "a4");
@@ -250,6 +287,17 @@ async function downloadPdf() {
 startPlanningBtn.addEventListener("click", showPlanner);
 backToHomeBtn.addEventListener("click", showLanding);
 
+viewTemplatesBtn.addEventListener("click", openTemplates);
+closeTemplatesBtn.addEventListener("click", closeTemplates);
+templatesOverlay.addEventListener("click", (e) => {
+    if (e.target === templatesOverlay) closeTemplates();
+});
+
+countryEl.addEventListener("change", () => {
+    updateInputLabels();
+    renderDays(); // Re-render existing days with new labels if needed
+});
+
 addDayBtn.addEventListener("click", addDay);
 
 daysContainer.addEventListener("click", (e) => {
@@ -266,3 +314,4 @@ closePreviewBtn.addEventListener("click", closePreview);
 previewOverlay.addEventListener("click", (e) => {
     if (e.target === previewOverlay) closePreview();
 });
+
