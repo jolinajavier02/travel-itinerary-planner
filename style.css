@@ -64,7 +64,7 @@ body {
     font-size: clamp(2.5rem, 8vw, 4.5rem);
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(to right, #fff, var(--primary), var(--secondary));
+    background: #09713D;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
