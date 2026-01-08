@@ -1,4 +1,9 @@
 // DOM references
+const landingSection = document.getElementById("landing");
+const plannerSection = document.getElementById("planner");
+const startPlanningBtn = document.getElementById("start-planning-btn");
+const backToHomeBtn = document.getElementById("back-to-home");
+
 const travelerNameEl = document.getElementById("travelerName");
 const countryEl = document.getElementById("country");
 const destinationsEl = document.getElementById("destinations");
@@ -30,6 +35,20 @@ const pdfTheadEl = document.getElementById("pdf-thead");
 const pdfTableBodyEl = document.getElementById("pdf-table-body");
 
 let days = [];
+
+// ---------- Navigation ----------
+
+function showPlanner() {
+    landingSection.style.display = "none";
+    plannerSection.classList.add("active");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showLanding() {
+    plannerSection.classList.remove("active");
+    landingSection.style.display = "flex";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // ---------- helpers ----------
 
@@ -71,7 +90,7 @@ function renderDays() {
 
         card.innerHTML = `
       <div class="day-header">
-        <span>Day ${i + 1} – ${d.date}</span>
+        <span><strong>Day ${i + 1}</strong> – ${d.date}</span>
         <button type="button" class="day-remove" data-index="${i}">
           Remove
         </button>
@@ -111,14 +130,12 @@ function buildTableHeader(countryCode) {
     const tr = document.createElement("tr");
 
     if (countryCode === "japan") {
-        // Japan template: Date | Activity Plan | Contact | Accommodation [web:63][web:64]
         ["Date", "Activity Plan", "Contact", "Accommodation"].forEach((h) => {
             const th = document.createElement("th");
             th.textContent = h;
             tr.appendChild(th);
         });
     } else {
-        // generic visa style: Date | City | Activities | Accommodation [web:1][web:68]
         ["Date", "City", "Activities", "Accommodation"].forEach((h) => {
             const th = document.createElement("th");
             th.textContent = h;
@@ -152,24 +169,24 @@ function updatePreviewContent() {
     pdfTitleEl.textContent = templateTitle;
 
     const parts = [];
-    if (header.travelerName) parts.push(`Applicant: ${header.travelerName}`);
-    if (header.destinations) parts.push(`Destinations: ${header.destinations}`);
-    if (header.purpose) parts.push(`Purpose: ${header.purpose}`);
+    if (header.travelerName) parts.push(`<strong>Applicant:</strong> ${header.travelerName}`);
+    if (header.destinations) parts.push(`<strong>Destinations:</strong> ${header.destinations}`);
+    if (header.purpose) parts.push(`<strong>Purpose:</strong> ${header.purpose}`);
 
     if (header.departureDate) {
         if (header.flightType === "roundtrip" && header.returnDate) {
             parts.push(
-                `Travel dates: ${header.departureDate} to ${header.returnDate} (${header.flightType})`
+                `<strong>Travel dates:</strong> ${header.departureDate} to ${header.returnDate} (${header.flightType})`
             );
         } else {
-            parts.push(`Travel date: ${header.departureDate} (${header.flightType})`);
+            parts.push(`<strong>Travel date:</strong> ${header.departureDate} (${header.flightType})`);
         }
     }
     if (header.flightDetails) {
-        parts.push(`Flights: ${header.flightDetails}`);
+        parts.push(`<strong>Flights:</strong> ${header.flightDetails}`);
     }
 
-    pdfMetaEl.innerHTML = parts.join(" · ");
+    pdfMetaEl.innerHTML = parts.join(" | ");
 
     buildTableHeader(header.country);
 
@@ -214,21 +231,24 @@ function closePreview() {
 }
 
 async function downloadPdf() {
-    openPreview(); // ensures content is up to date
+    openPreview();
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "pt", "a4");
     const pdfContent = document.querySelector(".preview-modal");
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
-            doc.save("itinerary.pdf");
+            doc.save(`itinerary_${header.travelerName || 'travel'}.pdf`);
         },
-        margin: [20, 20, 20, 20],
-        html2canvas: { scale: 0.8, useCORS: true },
+        margin: [40, 40, 40, 40],
+        html2canvas: { scale: 0.75, useCORS: true },
     });
 }
 
 // ---------- event bindings ----------
+
+startPlanningBtn.addEventListener("click", showPlanner);
+backToHomeBtn.addEventListener("click", showLanding);
 
 addDayBtn.addEventListener("click", addDay);
 

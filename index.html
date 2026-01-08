@@ -3,129 +3,157 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Travel Itinerary PDF Generator</title>
+    <title>Travel Itinerary Planner | Plan Your Next Adventure</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description"
+        content="Create professional, visa-ready travel itineraries in minutes. Support for Japan, Schengen, UK, and USA visa templates." />
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <header class="topbar">
-        <h1>Travel Itinerary Planner</h1>
-    </header>
-
-    <main class="container">
-        <section class="form-section">
-            <h2>Traveler & trip</h2>
-            <form id="itinerary-form">
-                <!-- traveler name -->
-                <div class="field">
-                    <label for="travelerName">Full name</label>
-                    <input type="text" id="travelerName" required />
-                </div>
-
-                <!-- main visa country -->
-                <div class="field">
-                    <label for="country">Visa / main destination country</label>
-                    <select id="country" required>
-                        <option value="">Select country…</option>
-                        <option value="schengen">Schengen (e.g., France, Germany)</option>
-                        <option value="japan">Japan</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="usa">United States</option>
-                        <option value="personal">Personal / Other</option>
-                    </select>
-                </div>
-
-                <!-- all destinations to visit -->
-                <div class="field">
-                    <label for="destinations">All destinations to visit</label>
-                    <input type="text" id="destinations"
-                        placeholder="e.g., Tokyo, Osaka, Kyoto / Paris, Brussels, Amsterdam" />
-                </div>
-
-                <div class="field">
-                    <label for="purpose">Purpose of travel</label>
-                    <input type="text" id="purpose" placeholder="Tourism, business, visit family…" />
-                </div>
-
-                <!-- flight details -->
-                <h3>Flight details</h3>
-
-                <div class="field">
-                    <label for="flightType">Flight type</label>
-                    <select id="flightType">
-                        <option value="roundtrip">Round trip (two way)</option>
-                        <option value="oneway">One way</option>
-                        <option value="connecting">Connecting flight</option>
-                        <option value="multi">Multiple flights</option>
-                    </select>
-                </div>
-
-                <div class="flight-grid">
-                    <div class="field">
-                        <label for="departureDate">Departure date</label>
-                        <input type="date" id="departureDate" />
-                    </div>
-                    <div class="field">
-                        <label for="returnDate">Return date (if round trip)</label>
-                        <input type="date" id="returnDate" />
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="flightDetails">Flight details</label>
-                    <textarea id="flightDetails"
-                        placeholder="e.g., MNL → NRT, JL746 · possible connections, multiple segments…"></textarea>
-                </div>
-
-                <!-- daily itinerary input -->
-                <h3>Daily itinerary (input)</h3>
-
-                <div class="day-input">
-                    <div class="field">
-                        <label for="dayDate">Date</label>
-                        <input type="date" id="dayDate" />
-                    </div>
-                    <div class="field">
-                        <label for="dayCityContact">City / Contact</label>
-                        <input type="text" id="dayCityContact" placeholder="City name or contact person/number" />
-                    </div>
-                    <div class="field">
-                        <label for="dayActivities">Activity plan</label>
-                        <textarea id="dayActivities" placeholder="Planned activities for the day"></textarea>
-                    </div>
-                    <div class="field">
-                        <label for="dayAccommodation">Accommodation</label>
-                        <input type="text" id="dayAccommodation" placeholder="Hotel / address / SAME AS ABOVE" />
-                    </div>
-
-                    <button type="button" id="add-day-btn" class="btn secondary">
-                        + Add day to itinerary
+    <!-- Landing Page Section -->
+    <section id="landing" class="landing-page">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Your Journey, <br>Perfectly Planned.</h1>
+                <p>Create professional, visa-ready travel itineraries in minutes. Whether it's for Japan, Schengen, or
+                    your personal adventure, we've got you covered.</p>
+                <div class="cta-group">
+                    <button id="start-planning-btn" class="btn primary large">
+                        Start Planning Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
                     </button>
+                    <button id="view-features-btn" class="btn secondary large">View Templates</button>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <!-- list of added days + preview/download -->
-                <h3>Itinerary days</h3>
-                <div class="itinerary-list-wrapper">
-                    <div class="itinerary-list-header">
-                        <div>
-                            <strong>Added days</strong>
+    <!-- Planner Section -->
+    <section id="planner" class="planner-section">
+        <header class="topbar">
+            <h1>Travel Itinerary Planner</h1>
+            <button id="back-to-home" class="btn secondary">Back to Home</button>
+        </header>
+
+        <div class="container">
+            <section class="form-section">
+                <h2>Traveler & Trip Details</h2>
+                <form id="itinerary-form">
+                    <!-- traveler name -->
+                    <div class="field">
+                        <label for="travelerName">Full Name (as per Passport)</label>
+                        <input type="text" id="travelerName" placeholder="e.g. John Doe" required />
+                    </div>
+
+                    <!-- main visa country -->
+                    <div class="field">
+                        <label for="country">Visa / Main Destination Country</label>
+                        <select id="country" required>
+                            <option value="">Select country…</option>
+                            <option value="schengen">Schengen (e.g., France, Germany)</option>
+                            <option value="japan">Japan</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="usa">United States</option>
+                            <option value="personal">Personal / Other</option>
+                        </select>
+                    </div>
+
+                    <!-- all destinations to visit -->
+                    <div class="field">
+                        <label for="destinations">All Destinations to Visit</label>
+                        <input type="text" id="destinations"
+                            placeholder="e.g., Tokyo, Osaka, Kyoto / Paris, Brussels, Amsterdam" />
+                    </div>
+
+                    <div class="field">
+                        <label for="purpose">Purpose of Travel</label>
+                        <input type="text" id="purpose" placeholder="Tourism, business, visit family…" />
+                    </div>
+
+                    <!-- flight details -->
+                    <h3>Flight Details</h3>
+
+                    <div class="field">
+                        <label for="flightType">Flight Type</label>
+                        <select id="flightType">
+                            <option value="roundtrip">Round trip (two way)</option>
+                            <option value="oneway">One way</option>
+                            <option value="connecting">Connecting flight</option>
+                            <option value="multi">Multiple flights</option>
+                        </select>
+                    </div>
+
+                    <div class="flight-grid">
+                        <div class="field">
+                            <label for="departureDate">Departure Date</label>
+                            <input type="date" id="departureDate" />
                         </div>
-                        <div class="actions">
-                            <button type="button" id="preview-btn" class="btn secondary">
-                                Preview
-                            </button>
-                            <button type="button" id="download-btn" class="btn primary">
-                                Download PDF
-                            </button>
+                        <div class="field">
+                            <label for="returnDate">Return Date (if round trip)</label>
+                            <input type="date" id="returnDate" />
                         </div>
                     </div>
 
-                    <div id="days-container"></div>
-                </div>
-            </form>
-        </section>
-    </main>
+                    <div class="field">
+                        <label for="flightDetails">Flight Details (Optional)</label>
+                        <textarea id="flightDetails"
+                            placeholder="e.g., MNL → NRT, JL746 · possible connections, multiple segments…"></textarea>
+                    </div>
+
+                    <!-- daily itinerary input -->
+                    <h3>Daily Itinerary</h3>
+
+                    <div class="day-input">
+                        <div class="field">
+                            <label for="dayDate">Date</label>
+                            <input type="date" id="dayDate" />
+                        </div>
+                        <div class="field">
+                            <label for="dayCityContact">City / Contact</label>
+                            <input type="text" id="dayCityContact" placeholder="City name or contact person/number" />
+                        </div>
+                        <div class="field">
+                            <label for="dayActivities">Activity Plan</label>
+                            <textarea id="dayActivities" placeholder="Planned activities for the day"></textarea>
+                        </div>
+                        <div class="field">
+                            <label for="dayAccommodation">Accommodation</label>
+                            <input type="text" id="dayAccommodation" placeholder="Hotel / address / SAME AS ABOVE" />
+                        </div>
+
+                        <button type="button" id="add-day-btn" class="btn primary">
+                            + Add Day to Itinerary
+                        </button>
+                    </div>
+
+                    <!-- list of added days + preview/download -->
+                    <h3>Added Days</h3>
+                    <div class="itinerary-list-wrapper">
+                        <div class="itinerary-list-header">
+                            <div>
+                                <strong>Itinerary Summary</strong>
+                            </div>
+                            <div class="actions">
+                                <button type="button" id="preview-btn" class="btn secondary">
+                                    Preview
+                                </button>
+                                <button type="button" id="download-btn" class="btn primary">
+                                    Download PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="days-container"></div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </section>
 
     <!-- Preview overlay (full formatted table) -->
     <div id="preview-overlay" class="preview-overlay hidden">
