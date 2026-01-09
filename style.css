@@ -393,6 +393,12 @@ textarea:focus {
     padding: 1rem;
 }
 
+@media (max-width: 480px) {
+    .preview-overlay {
+        padding: 0.5rem;
+    }
+}
+
 .preview-overlay.hidden {
     display: none;
 }
@@ -404,9 +410,41 @@ textarea:focus {
     max-width: 900px;
     max-height: 95vh;
     border-radius: var(--radius);
-    padding: 2rem;
+    padding: 1.5rem;
     overflow-y: auto;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.preview-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--slate-900);
+}
+
+@media (max-width: 640px) {
+    .preview-header {
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .preview-header h2 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .preview-modal {
+        padding: 1rem;
+    }
 }
 
 .printable-area {
@@ -418,19 +456,29 @@ textarea:focus {
     box-sizing: border-box;
 }
 
+@media (max-width: 640px) {
+    .printable-area {
+        padding: 10px;
+    }
+}
+
 
 
 #pdf-title {
     text-align: center;
     margin-bottom: 15px;
     color: #09713D;
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+@media (max-width: 640px) {
+    #pdf-title {
+        font-size: 14pt;
+    }
 }
 
 #pdf-meta {
@@ -438,10 +486,34 @@ textarea:focus {
     margin-bottom: 15px;
     font-size: 10pt;
     color: #333;
-    line-height: 1.4;
+    line-height: 1.6;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    padding: 10px 0;
+    padding: 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+}
+
+@media (max-width: 640px) {
+    #pdf-meta {
+        font-size: 9pt;
+        padding: 8px 0;
+    }
+}
+
+#pdf-meta span:not(:last-child)::after {
+    content: "|";
+    margin-left: 1rem;
+    color: #ccc;
+}
+
+@media (max-width: 640px) {
+    #pdf-meta span:not(:last-child)::after {
+        display: none;
+        /* Hide separators on mobile for cleaner wrapping */
+    }
 }
 
 #pdf-meta strong {
@@ -470,6 +542,29 @@ textarea:focus {
     color: #ffffff !important;
     text-transform: uppercase;
     font-size: 9pt;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 1rem;
+}
+
+#pdf-table {
+    min-width: 600px;
+    /* Ensure table doesn't get too squashed */
+}
+
+@media (max-width: 640px) {
+    #pdf-table {
+        font-size: 9pt;
+    }
+
+    #pdf-table th,
+    #pdf-table td {
+        padding: 6px 8px;
+    }
 }
 
 

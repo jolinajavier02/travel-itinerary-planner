@@ -259,7 +259,7 @@ function updatePreviewContent() {
         );
     }
 
-    pdfMetaEl.innerHTML = parts.join(" &nbsp;|&nbsp; ");
+    pdfMetaEl.innerHTML = parts.map(p => `<span>${p}</span>`).join("");
 
     buildTableHeader(header.country);
 
