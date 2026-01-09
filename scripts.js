@@ -304,21 +304,28 @@ async function downloadPdf() {
     const pdf = new jsPDF("p", "pt", "a4");
     const pdfContent = document.getElementById("printable-content");
 
-    // A4 width is 595.28pt. With 50pt margins on each side, content width is 495.28pt.
-    const pdfWidth = 495;
-    const marginX = (595.28 - pdfWidth) / 2; // approx 50.14pt
+    // A4 dimensions: 595.28pt x 841.89pt
+    // Use a standard 1-inch margin (approx 72pt) for a professional look
+    const margin = 60;
+    const pdfWidth = 595.28 - (margin * 2); // 475.28pt
 
     const originalWidth = pdfContent.style.width;
+    const originalPadding = pdfContent.style.padding;
+
+    // Apply temporary styles for the export
     pdfContent.style.width = pdfWidth + "pt";
+    pdfContent.style.padding = "0"; // Let jsPDF handle the outer margins
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
             doc.save(`itinerary_${header.travelerName.replace(/\s+/g, '_') || 'travel'}.pdf`);
-            pdfContent.style.width = originalWidth; // Restore original width
+            // Restore original styles
+            pdfContent.style.width = originalWidth;
+            pdfContent.style.padding = originalPadding;
         },
-        x: marginX,
-        y: 40,
-        margin: [40, marginX, 40, marginX],
+        x: margin,
+        y: margin,
+        margin: [margin, margin, margin, margin],
         autoPaging: 'text',
         width: pdfWidth,
         windowWidth: pdfWidth,
