@@ -179,15 +179,21 @@ function buildTableHeader(countryCode) {
     const tr = document.createElement("tr");
 
     if (countryCode === "japan") {
-        ["Date", "Activity Plan", "Contact", "Accommodation"].forEach((h) => {
+        const headers = ["Date", "Activity Plan", "Contact", "Accommodation"];
+        const widths = ["15%", "40%", "20%", "25%"];
+        headers.forEach((h, i) => {
             const th = document.createElement("th");
             th.textContent = h;
+            th.style.width = widths[i];
             tr.appendChild(th);
         });
     } else {
-        ["Date", "City", "Activities", "Accommodation"].forEach((h) => {
+        const headers = ["Date", "City", "Activities", "Accommodation"];
+        const widths = ["15%", "20%", "40%", "25%"];
+        headers.forEach((h, i) => {
             const th = document.createElement("th");
             th.textContent = h;
+            th.style.width = widths[i];
             tr.appendChild(th);
         });
     }
@@ -239,7 +245,7 @@ function updatePreviewContent() {
         parts.push(`<strong>Multiple Flights:</strong> ${header.multiFlightDetails}`);
     }
 
-    pdfMetaEl.innerHTML = parts.join(" | ");
+    pdfMetaEl.innerHTML = parts.join(" &nbsp;|&nbsp; ");
 
     buildTableHeader(header.country);
 
@@ -287,15 +293,30 @@ async function downloadPdf() {
     const header = collectHeaderData();
     openPreview();
     const { jsPDF } = window.jspdf;
+
+    // Create PDF with A4 dimensions in points (595.28 x 841.89)
     const pdf = new jsPDF("p", "pt", "a4");
-    const pdfContent = document.querySelector(".preview-modal");
+    const pdfContent = document.getElementById("printable-content");
+
+    // Temporarily set width to match A4 (approx 525pt after margins) to prevent cutting
+    const originalWidth = pdfContent.style.width;
+    pdfContent.style.width = "525pt";
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
-            doc.save(`itinerary_${header.travelerName || 'travel'}.pdf`);
+            doc.save(`itinerary_${header.travelerName.replace(/\s+/g, '_') || 'travel'}.pdf`);
+            pdfContent.style.width = originalWidth; // Restore original width
         },
-        margin: [40, 40, 40, 40],
-        html2canvas: { scale: 0.75, useCORS: true },
+        x: 35,
+        y: 40,
+        margin: [40, 35, 40, 35],
+        autoPaging: 'text',
+        html2canvas: {
+            scale: 1,
+            useCORS: true,
+            logging: false,
+            letterRendering: true
+        },
     });
 }
 
