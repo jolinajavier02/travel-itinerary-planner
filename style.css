@@ -395,9 +395,11 @@ textarea:focus {
     background: white;
     padding: 0;
     width: 100%;
+    max-width: 800px;
     margin: 0 auto;
     box-sizing: border-box;
 }
+
 
 #pdf-title {
     text-align: center;
