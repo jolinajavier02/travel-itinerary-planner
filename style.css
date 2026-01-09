@@ -98,6 +98,21 @@ body {
     flex-wrap: wrap;
 }
 
+@media (max-width: 640px) {
+    .hero {
+        padding: 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+}
+
 /* Planner Section Styles */
 .planner-section {
     display: none;
@@ -123,6 +138,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 .topbar h1 {
@@ -205,6 +221,35 @@ textarea:focus {
     .flight-grid {
         grid-template-columns: 1fr;
     }
+
+    .topbar {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+    }
+
+    .topbar h1 {
+        font-size: 1.2rem;
+    }
+
+    .itinerary-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .itinerary-list-header .actions {
+        width: 100%;
+    }
+
+    .itinerary-list-header .actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .form-section {
+        padding: 1.5rem;
+    }
 }
 
 /* Day Input & Cards */
@@ -221,6 +266,21 @@ textarea:focus {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
+}
+
+.itinerary-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.itinerary-list-header .actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .day-card {
