@@ -310,16 +310,19 @@ async function downloadPdf() {
     openPreview();
 
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF("p", "pt", "a4");
+    const pdf = new jsPDF("p", "mm", "a4"); // A4 in mm
     const pdfContent = document.getElementById("printable-content");
 
-    // Store original inline styles
-    const originalWidth = pdfContent.style.width;
-    const originalPadding = pdfContent.style.padding;
+    const pageWidth = 210;   // A4 width in mm
+    const margin = 15;       // 15mm margins
+    const contentWidth = pageWidth - (margin * 2); // 180mm
 
-    // Let CSS control centering (e.g. #printable-content { max-width: 800px; margin: 0 auto; })
-    // Do not force a custom width here; jsPDF.html will render what the browser shows.
-    const margin = 60;
+    const originalWidth = pdfContent.style.width;
+    const originalMargin = pdfContent.style.margin;
+
+    // Make the printable area match A4 inner width
+    pdfContent.style.width = contentWidth + "mm";
+    pdfContent.style.margin = "0";
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
@@ -327,16 +330,15 @@ async function downloadPdf() {
                 header.travelerName.replace(/\s+/g, "_") || "travel";
             doc.save(`itinerary_${safeName}.pdf`);
 
-            // Restore original styles after export
+            // Restore styles
             pdfContent.style.width = originalWidth;
-            pdfContent.style.padding = originalPadding;
+            pdfContent.style.margin = originalMargin;
         },
         x: margin,
         y: margin,
         margin: [margin, margin, margin, margin],
-        // width and windowWidth removed so the layout width comes from your CSS
         html2canvas: {
-            scale: 1,
+            scale: 2,
             useCORS: true,
             logging: false,
             letterRendering: true,
@@ -345,6 +347,7 @@ async function downloadPdf() {
         },
     });
 }
+
 
 // ---------- event bindings ----------
 
