@@ -180,6 +180,12 @@ body {
     box-shadow: var(--shadow);
 }
 
+.section-divider {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
 h2,
 h3 {
     color: var(--primary);
