@@ -118,9 +118,27 @@ body {
     display: none;
     /* Hidden by default */
     padding: 4rem 1rem;
-    max-width: 1100px;
+    max-width: 1300px;
     margin: 0 auto;
     animation: fadeIn 0.5s ease-in;
+}
+
+.planner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.planner-column {
+    min-width: 0;
+    /* Prevent grid blowout */
+}
+
+@media (max-width: 1024px) {
+    .planner-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .planner-section.active {
@@ -157,7 +175,7 @@ body {
 .form-section {
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 2.5rem;
+    padding: 2rem;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
 }
