@@ -240,10 +240,11 @@ textarea:focus {
 
     .itinerary-list-header .actions {
         width: 100%;
+        flex-direction: column;
     }
 
     .itinerary-list-header .actions .btn {
-        flex: 1;
+        width: 100%;
         justify-content: center;
     }
 
