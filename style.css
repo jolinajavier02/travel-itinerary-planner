@@ -488,6 +488,74 @@ textarea:focus {
     }
 }
 
+/* Ads Section */
+.ads-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.ad-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.ad-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+.ad-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ad-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.ad-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.ad-content {
+    padding: 1.25rem;
+}
+
+.ad-content h4 {
+    margin: 0 0 0.5rem 0;
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.ad-content p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

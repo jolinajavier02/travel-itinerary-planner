@@ -43,7 +43,7 @@
         <div class="container">
             <form id="itinerary-form">
                 <div class="planner-grid">
-                    <!-- Left Column: Traveler, Flight & Daily Itinerary -->
+                    <!-- Left Column: Traveler & Flight Details + Ads -->
                     <div class="planner-column">
                         <section class="form-section">
                             <h2>Traveler & Trip Details</h2>
@@ -142,7 +142,35 @@
                             </div>
                         </section>
 
-                        <section class="form-section" style="margin-top: 2rem;">
+                        <!-- Ads Section -->
+                        <div class="ads-container">
+                            <div class="ad-card">
+                                <span class="ad-label">Sponsored</span>
+                                <a href="#" class="ad-link">
+                                    <img src="docstranslation_ad_1767931302489.png" alt="DocsTranslation Ad"
+                                        class="ad-image">
+                                    <div class="ad-content">
+                                        <h4>DocsTranslation</h4>
+                                        <p>Professional document translation for your visa applications.</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="ad-card">
+                                <span class="ad-label">Sponsored</span>
+                                <a href="http://www.natours-travel.com" target="_blank" class="ad-link">
+                                    <img src="natours_ad_1767931320078.png" alt="Natours Ad" class="ad-image">
+                                    <div class="ad-content">
+                                        <h4>Natours</h4>
+                                        <p>Explore the world with our exclusive nature-focused travel packages.</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Daily Itinerary & Added Days -->
+                    <div class="planner-column">
+                        <section class="form-section">
                             <!-- daily itinerary input -->
                             <h3>Daily Itinerary</h3>
 
@@ -171,11 +199,8 @@
                                 </button>
                             </div>
                         </section>
-                    </div>
 
-                    <!-- Right Column: Added Days -->
-                    <div class="planner-column">
-                        <section class="form-section">
+                        <section class="form-section" style="margin-top: 2rem;">
                             <!-- list of added days + preview/download -->
                             <h3>Added Days</h3>
                             <div class="itinerary-list-wrapper">
