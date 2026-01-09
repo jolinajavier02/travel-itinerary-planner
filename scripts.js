@@ -21,12 +21,12 @@ const multiFlightField = document.getElementById("multi-flight-field");
 
 // daily input
 const dayDateEl = document.getElementById("dayDate");
-const dayCityContactEl = document.getElementById("dayCityContact");
+const dayCityContactEl = document.getElementById("Contact");
 const dayActivitiesEl = document.getElementById("dayActivities");
 const dayAccommodationEl = document.getElementById("dayAccommodation");
 const addDayBtn = document.getElementById("add-day-btn");
 
-const labelCityContact = document.getElementById("label-city-contact");
+const labelCityContact = document.getElementById("contact");
 const labelActivities = document.getElementById("label-activities");
 
 // list of days
@@ -88,8 +88,8 @@ function updateInputLabels() {
         labelActivities.textContent = "Activity Plan";
         dayActivitiesEl.placeholder = "Planned activities for the day";
     } else {
-        labelCityContact.textContent = "City";
-        dayCityContactEl.placeholder = "City name";
+        labelCityContact.textContent = "Contact"; // Kept as Contact per user's manual change
+        dayCityContactEl.placeholder = "Contact person or number";
         labelActivities.textContent = "Activities";
         dayActivitiesEl.placeholder = "Morning: ... Afternoon: ... Evening: ...";
     }
@@ -134,7 +134,7 @@ function renderDays() {
         const card = document.createElement("div");
         card.className = "day-card";
 
-        const cityLabel = country === "japan" ? "Contact" : "City";
+        const cityLabel = "Contact";
         const activityLabel = country === "japan" ? "Activity Plan" : "Activities";
 
         card.innerHTML = `
@@ -188,7 +188,7 @@ function buildTableHeader(countryCode) {
             tr.appendChild(th);
         });
     } else {
-        const headers = ["Date", "City", "Activities", "Accommodation"];
+        const headers = ["Date", "Contact", "Activities", "Accommodation"];
         const widths = ["15%", "20%", "40%", "25%"];
         headers.forEach((h, i) => {
             const th = document.createElement("th");
