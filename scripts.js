@@ -298,21 +298,21 @@ async function downloadPdf() {
     const pdf = new jsPDF("p", "pt", "a4");
     const pdfContent = document.getElementById("printable-content");
 
-    // Temporarily set width to fit A4 (approx 500pt) to prevent cutting
+    // Temporarily set width to fit A4 (approx 480pt) to ensure no cutting and perfect centering
     const originalWidth = pdfContent.style.width;
-    pdfContent.style.width = "500pt";
+    pdfContent.style.width = "480pt";
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
             doc.save(`itinerary_${header.travelerName.replace(/\s+/g, '_') || 'travel'}.pdf`);
             pdfContent.style.width = originalWidth; // Restore original width
         },
-        x: 45,
+        x: 57, // (595.28 - 480) / 2 = 57.64
         y: 40,
-        margin: [40, 45, 40, 45],
+        margin: [40, 57, 40, 57],
         autoPaging: 'text',
-        width: 500, // Target width in points
-        windowWidth: 500, // Match window width to target width for consistent rendering
+        width: 480, // Target width in points
+        windowWidth: 480, // Match window width to target width for consistent rendering
         html2canvas: {
             scale: 1,
             useCORS: true,
