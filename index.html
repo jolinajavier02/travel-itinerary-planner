@@ -43,7 +43,7 @@
         <div class="container">
             <form id="itinerary-form">
                 <div class="planner-grid">
-                    <!-- Left Column: Traveler & Flight Details -->
+                    <!-- Left Column: Traveler, Flight & Daily Itinerary -->
                     <div class="planner-column">
                         <section class="form-section">
                             <h2>Traveler & Trip Details</h2>
@@ -141,11 +141,8 @@
                                     placeholder="e.g., Flight 1: MNL-NRT, Flight 2: NRT-CTS, Flight 3: CTS-MNL..."></textarea>
                             </div>
                         </section>
-                    </div>
 
-                    <!-- Right Column: Daily Itinerary & Added Days -->
-                    <div class="planner-column">
-                        <section class="form-section">
+                        <section class="form-section" style="margin-top: 2rem;">
                             <!-- daily itinerary input -->
                             <h3>Daily Itinerary</h3>
 
@@ -173,7 +170,12 @@
                                     + Add Day to Itinerary
                                 </button>
                             </div>
+                        </section>
+                    </div>
 
+                    <!-- Right Column: Added Days -->
+                    <div class="planner-column">
+                        <section class="form-section">
                             <!-- list of added days + preview/download -->
                             <h3>Added Days</h3>
                             <div class="itinerary-list-wrapper">
