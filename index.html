@@ -105,7 +105,8 @@
 
                     <div class="field">
                         <label for="flightType">Flight Type</label>
-                        <select id="flightType">
+                        <select id="flightType" required>
+                            <option value="">Select flight type…</option>
                             <option value="roundtrip">Round trip (two way)</option>
                             <option value="oneway">One way</option>
                             <option value="connecting">Connecting flight</option>
@@ -113,7 +114,7 @@
                         </select>
                     </div>
 
-                    <div class="flight-grid">
+                    <div class="flight-grid" id="flight-grid">
                         <div class="field" id="departure-field">
                             <label for="departureDate">Departure Date</label>
                             <input type="date" id="departureDate" />

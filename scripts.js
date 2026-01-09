@@ -14,6 +14,7 @@ const returnDateEl = document.getElementById("returnDate");
 const connectingDetailsEl = document.getElementById("connectingDetails");
 const multiFlightDetailsEl = document.getElementById("multiFlightDetails");
 
+const flightGridEl = document.getElementById("flight-grid");
 const departureField = document.getElementById("departure-field");
 const returnField = document.getElementById("return-field");
 const connectingDetailsField = document.getElementById("connecting-details-field");
@@ -64,10 +65,15 @@ function updateFlightFields() {
     const type = flightTypeEl.value;
 
     // Reset fields
+    flightGridEl.style.display = "none";
     returnField.classList.remove("disabled");
     returnDateEl.disabled = false;
     connectingDetailsField.style.display = "none";
     multiFlightField.style.display = "none";
+
+    if (!type) return; // Hide everything if no type selected
+
+    flightGridEl.style.display = "grid";
 
     if (type === "oneway") {
         returnField.classList.add("disabled");
