@@ -50,13 +50,13 @@ let days = [];
 function showPlanner() {
     landingSection.style.display = "none";
     plannerSection.classList.add("active");
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function showLanding() {
     plannerSection.classList.remove("active");
     landingSection.style.display = "flex";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ---------- helpers ----------
@@ -94,7 +94,7 @@ function updateInputLabels() {
         labelActivities.textContent = "Activity Plan";
         dayActivitiesEl.placeholder = "Planned activities for the day";
     } else {
-        labelCityContact.textContent = "Contact"; // Kept as Contact per user's manual change
+        labelCityContact.textContent = "Contact";
         dayCityContactEl.placeholder = "Contact person or number";
         labelActivities.textContent = "Activities";
         dayActivitiesEl.placeholder = "Morning: ... Afternoon: ... Evening: ...";
@@ -119,7 +119,7 @@ function addDay() {
         cityContact: dayCityContactEl.value.trim(),
         activities: dayActivitiesEl.value.trim(),
         accommodation: dayAccommodationEl.value.trim(),
-        countryFormat: countryEl.value // Store format at time of adding
+        countryFormat: countryEl.value, // Store format at time of adding
     };
 
     days.push(day);
@@ -230,8 +230,10 @@ function updatePreviewContent() {
     pdfTitleEl.textContent = templateTitle;
 
     const parts = [];
-    if (header.travelerName) parts.push(`<strong>Applicant:</strong> ${header.travelerName}`);
-    if (header.purpose && header.purpose !== "Select purpose…") parts.push(`<strong>Purpose:</strong> ${header.purpose}`);
+    if (header.travelerName)
+        parts.push(`<strong>Applicant:</strong> ${header.travelerName}`);
+    if (header.purpose && header.purpose !== "Select purpose…")
+        parts.push(`<strong>Purpose:</strong> ${header.purpose}`);
 
     if (header.departureDate) {
         if (header.flightType === "roundtrip" && header.returnDate) {
@@ -239,16 +241,22 @@ function updatePreviewContent() {
                 `<strong>Travel dates:</strong> ${header.departureDate} to ${header.returnDate} (${header.flightType})`
             );
         } else {
-            parts.push(`<strong>Travel date:</strong> ${header.departureDate} (${header.flightType})`);
+            parts.push(
+                `<strong>Travel date:</strong> ${header.departureDate} (${header.flightType})`
+            );
         }
     }
 
     if (header.connectingDetails) {
-        parts.push(`<strong>Connecting Flights:</strong> ${header.connectingDetails}`);
+        parts.push(
+            `<strong>Connecting Flights:</strong> ${header.connectingDetails}`
+        );
     }
 
     if (header.multiFlightDetails) {
-        parts.push(`<strong>Multiple Flights:</strong> ${header.multiFlightDetails}`);
+        parts.push(
+            `<strong>Multiple Flights:</strong> ${header.multiFlightDetails}`
+        );
     }
 
     pdfMetaEl.innerHTML = parts.join(" &nbsp;|&nbsp; ");
@@ -295,47 +303,45 @@ function closePreview() {
     previewOverlay.classList.add("hidden");
 }
 
+// ---------- PDF download (centered layout for PRD) ----------
+
 async function downloadPdf() {
     const header = collectHeaderData();
     openPreview();
-    const { jsPDF } = window.jspdf;
 
-    // Create PDF with A4 dimensions in points (595.28 x 841.89)
+    const { jsPDF } = window.jspdf;
     const pdf = new jsPDF("p", "pt", "a4");
     const pdfContent = document.getElementById("printable-content");
 
-    // A4 dimensions: 595.28pt x 841.89pt
-    // Use a standard 1-inch margin (approx 72pt) for a professional look
-    const margin = 60;
-    const pdfWidth = 595.28 - (margin * 2); // 475.28pt
-
+    // Store original inline styles
     const originalWidth = pdfContent.style.width;
     const originalPadding = pdfContent.style.padding;
 
-    // Apply temporary styles for the export
-    pdfContent.style.width = pdfWidth + "pt";
-    pdfContent.style.padding = "0"; // Let jsPDF handle the outer margins
+    // Let CSS control centering (e.g. #printable-content { max-width: 800px; margin: 0 auto; })
+    // Do not force a custom width here; jsPDF.html will render what the browser shows.
+    const margin = 60;
 
     await pdf.html(pdfContent, {
         callback: function (doc) {
-            doc.save(`itinerary_${header.travelerName.replace(/\s+/g, '_') || 'travel'}.pdf`);
-            // Restore original styles
+            const safeName =
+                header.travelerName.replace(/\s+/g, "_") || "travel";
+            doc.save(`itinerary_${safeName}.pdf`);
+
+            // Restore original styles after export
             pdfContent.style.width = originalWidth;
             pdfContent.style.padding = originalPadding;
         },
         x: margin,
         y: margin,
         margin: [margin, margin, margin, margin],
-        autoPaging: 'text',
-        width: pdfWidth,
-        windowWidth: pdfWidth,
+        // width and windowWidth removed so the layout width comes from your CSS
         html2canvas: {
             scale: 1,
             useCORS: true,
             logging: false,
             letterRendering: true,
             scrollX: 0,
-            scrollY: 0
+            scrollY: 0,
         },
     });
 }
@@ -372,4 +378,3 @@ previewOverlay.addEventListener("click", (e) => {
 // Initialize
 updateFlightFields();
 updateInputLabels();
-
