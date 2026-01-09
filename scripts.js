@@ -11,7 +11,6 @@ const purposeEl = document.getElementById("purpose");
 const flightTypeEl = document.getElementById("flightType");
 const departureDateEl = document.getElementById("departureDate");
 const returnDateEl = document.getElementById("returnDate");
-const flightDetailsEl = document.getElementById("flightDetails");
 const connectingDetailsEl = document.getElementById("connectingDetails");
 const multiFlightDetailsEl = document.getElementById("multiFlightDetails");
 
@@ -169,7 +168,6 @@ function collectHeaderData() {
         flightType: flightTypeEl.value,
         departureDate: departureDateEl.value,
         returnDate: returnDateEl.value,
-        flightDetails: flightDetailsEl.value.trim(),
         connectingDetails: connectingDetailsEl.value.trim(),
         multiFlightDetails: multiFlightDetailsEl.value.trim(),
     };
@@ -239,10 +237,6 @@ function updatePreviewContent() {
 
     if (header.multiFlightDetails) {
         parts.push(`<strong>Multiple Flights:</strong> ${header.multiFlightDetails}`);
-    }
-
-    if (header.flightDetails) {
-        parts.push(`<strong>Flight Details:</strong> ${header.flightDetails}`);
     }
 
     pdfMetaEl.innerHTML = parts.join(" | ");
