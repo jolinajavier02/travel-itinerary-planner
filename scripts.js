@@ -309,44 +309,21 @@ async function downloadPdf() {
     const header = collectHeaderData();
     openPreview();
 
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF("p", "mm", "a4"); // A4 in mm
-    const pdfContent = document.getElementById("printable-content");
+    const element = document.getElementById("printable-content");
+    const safeName =
+        header.travelerName.replace(/\s+/g, "_") || "travel";
 
-    const pageWidth = 210;   // A4 width in mm
-    const margin = 15;       // 15mm margins
-    const contentWidth = pageWidth - (margin * 2); // 180mm
+    const opt = {
+        margin: 20,  // 20mm margins on A4
+        filename: `itinerary_${safeName}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 1.5, scrollX: 0, scrollY: 0 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    };
 
-    const originalWidth = pdfContent.style.width;
-    const originalMargin = pdfContent.style.margin;
-
-    // Make the printable area match A4 inner width
-    pdfContent.style.width = contentWidth + "mm";
-    pdfContent.style.margin = "0";
-
-    await pdf.html(pdfContent, {
-        callback: function (doc) {
-            const safeName =
-                header.travelerName.replace(/\s+/g, "_") || "travel";
-            doc.save(`itinerary_${safeName}.pdf`);
-
-            // Restore styles
-            pdfContent.style.width = originalWidth;
-            pdfContent.style.margin = originalMargin;
-        },
-        x: margin,
-        y: margin,
-        margin: [margin, margin, margin, margin],
-        html2canvas: {
-            scale: 2,
-            useCORS: true,
-            logging: false,
-            letterRendering: true,
-            scrollX: 0,
-            scrollY: 0,
-        },
-    });
+    await html2pdf().set(opt).from(element).save();
 }
+
 
 
 // ---------- event bindings ----------
