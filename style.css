@@ -393,12 +393,12 @@ textarea:focus {
 
 .printable-area {
     background: white;
-    padding: 0;
+    padding: 0 10mm;
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
     box-sizing: border-box;
 }
+
 
 #pdf-title {
     text-align: center;
