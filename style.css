@@ -539,6 +539,12 @@ textarea:focus {
     display: block;
 }
 
+.ad-image.logo-ad {
+    object-fit: contain;
+    padding: 2rem;
+    background: #ffffff;
+}
+
 .ad-content {
     padding: 1.25rem;
 }
